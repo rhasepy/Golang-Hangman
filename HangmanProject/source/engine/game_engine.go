@@ -17,13 +17,7 @@ func mainMenuMsg() {
 	fmt.Print("Choice: ")
 }
 
-func gameMenuMsg() {
-
-	fmt.Printf("\nYour Health: %d\n", 5)
-	fmt.Print("Choice: ")
-}
-
-func EngineRoutine() {
+func StartGameActivity() {
 
 	fmt.Printf("Game Started...\n")
 
@@ -47,13 +41,21 @@ func EngineRoutine() {
 
 func GameRoutine() {
 
-	fmt.Println(repository.RepoMsg())
-	for {
+	repository.Construct()
 
-		gameMenuMsg()
+	for gameLoop := true; gameLoop; {
 
+		idx, msg := repository.GetOneWord()
+		if idx == -1 {
+			gameLoop = false
+			fmt.Printf("\n%s\n", msg)
+			os.Exit(0)
+		}
+
+		/*gameMenuMsg()*/
+
+		fmt.Printf("Input: ")
 		choice := util.ReadInput_Char()
-
-		fmt.Printf("Your choice: %c\n", choice)
+		fmt.Printf("%c, Processing...\n", choice)
 	}
 }

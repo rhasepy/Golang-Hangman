@@ -12,5 +12,5 @@ func main() {
 	fmt.Println("******* ****** ****** ****** ****** ****** ******")
 	fmt.Printf("\n\n")
 
-	engine.EngineRoutine()
+	engine.StartGameActivity()
 }

@@ -2,6 +2,8 @@ package util
 
 import (
 	"bufio"
+	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -25,8 +27,32 @@ func ReadInput_Int() int {
 }
 
 func ReadInput_Char() byte {
+
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
 
 	return byte(text[0])
+}
+
+func ReadFileContent(path string) []string {
+
+	file, err := os.Open(path)
+	if err != nil {
+		fmt.Println("[ERROR] File Open...")
+		os.Exit(0)
+	}
+	defer file.Close()
+
+	var WordList []string
+	for reader := bufio.NewReader(file); ; {
+
+		line, _, err := reader.ReadLine()
+		if err == io.EOF {
+			break
+		}
+
+		WordList = append(WordList, strings.ToLower(string(line)))
+	}
+
+	return WordList
 }
