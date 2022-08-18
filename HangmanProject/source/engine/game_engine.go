@@ -19,7 +19,7 @@ type GameObj struct {
 	TrueMoves    []byte
 	IsWin        bool
 	Score        int
-	LastMoveStat bool
+	IsStarted    bool
 }
 
 func CreateGameObj(word string, globalScore int) GameObj {
@@ -28,7 +28,7 @@ func CreateGameObj(word string, globalScore int) GameObj {
 		Word:         word,
 		IsWin:        false,
 		Score:        globalScore,
-		LastMoveStat: true,
+		IsStarted:    true,
 	}
 }
 
@@ -77,7 +77,7 @@ func (g *GameObj) DrawHang(totalHeath int) {
 	fmt.Printf("   |\n")
 	fmt.Printf("  ---\n")
 
-	if !g.LastMoveStat {
+	if !g.IsStarted {
 
 		if g.WrongMoveCtr > 0 {
 			fmt.Printf("   O\n")
@@ -131,11 +131,10 @@ func (g *GameObj) CheckMove(move byte) bool {
 		if !util.ContainsBytes(g.TrueMoves, move) {
 			g.TrueMoves = append(g.TrueMoves, move)
 		}
-		g.LastMoveStat = true
 		return true
 	}
 
-	g.LastMoveStat = false
+	g.IsStarted = false
 	return false
 }
 

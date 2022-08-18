@@ -8,14 +8,20 @@ import (
 )
 
 var wordList []string
-var takenWordCount int = 0
 var scoredWordCount int = 0
+var global_idx int = -1
 var scoreTable map[int]bool
 
 func Construct() {
 
+	rand.Seed(time.Now().Unix())
 	scoreTable = make(map[int]bool)
 	wordList = util.ReadFileContent(config.FilePath)
+
+	rand.Shuffle(len(wordList), func(i, j int) {
+		wordList[i], wordList[j] = wordList[j], wordList[i]
+	})
+
 	for index := range wordList {
 		scoreTable[index] = false
 	}
@@ -40,12 +46,6 @@ func GetOneWord() (int, string) {
 		return -1, "[ERROR] Wordlist is empty!"
 	}
 
-	for {
-		rand.Seed(time.Now().Unix())
-		idx := rand.Intn(len(wordList))
-		if !scoreTable[idx] {
-			takenWordCount += 1
-			return idx, wordList[idx]
-		}
-	}
+	global_idx += 1
+	return global_idx, wordList[global_idx]
 }
