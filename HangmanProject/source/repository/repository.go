@@ -1,11 +1,11 @@
 package repository
 
 import (
+	"game/source/config"
 	"game/source/util"
 	"math/rand"
+	"time"
 )
-
-var _FilePath string = "resource/wordlist.txt"
 
 var wordList []string
 var takenWordCount int = 0
@@ -15,10 +15,14 @@ var scoreTable map[int]bool
 func Construct() {
 
 	scoreTable = make(map[int]bool)
-	wordList = util.ReadFileContent(_FilePath)
+	wordList = util.ReadFileContent(config.FilePath)
 	for index := range wordList {
 		scoreTable[index] = false
 	}
+}
+
+func GetWordCount() int {
+	return len(wordList)
 }
 
 func ScoreWord(wordID int) {
@@ -32,19 +36,12 @@ func ScoreWord(wordID int) {
 
 func GetOneWord() (int, string) {
 
-	if takenWordCount == len(scoreTable) {
-
-		if scoredWordCount == len(scoreTable) {
-			return -1, "You Win, Congratulations!"
-		} else {
-			return -1, "All word are gone, You Lose!"
-		}
-
-	} else if len(wordList) == 0 {
+	if len(wordList) == 0 {
 		return -1, "[ERROR] Wordlist is empty!"
 	}
 
 	for {
+		rand.Seed(time.Now().Unix())
 		idx := rand.Intn(len(wordList))
 		if !scoreTable[idx] {
 			takenWordCount += 1

@@ -38,7 +38,7 @@ func ReadFileContent(path string) []string {
 
 	file, err := os.Open(path)
 	if err != nil {
-		fmt.Println("[ERROR] File Open...")
+		fmt.Printf("[ERROR] File Open: %s\n", path)
 		os.Exit(0)
 	}
 	defer file.Close()
@@ -55,4 +55,23 @@ func ReadFileContent(path string) []string {
 	}
 
 	return WordList
+}
+
+func ContainsBytes(arr []byte, target byte) bool {
+
+	if arr == nil {
+		return false
+	}
+
+	if len(arr) == 0 {
+		return false
+	}
+
+	for _, item := range arr {
+		if byte(item) == target {
+			return true
+		}
+	}
+
+	return false
 }
