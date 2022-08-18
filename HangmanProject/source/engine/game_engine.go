@@ -38,6 +38,7 @@ func mainMenuMsg() {
 	fmt.Println("*** *** MENU *** ***")
 	fmt.Println("1) Start Hangman Game")
 	fmt.Println("2) Exit")
+	fmt.Println("*** *** *  * *** ***")
 
 	fmt.Print("Choice: ")
 }
@@ -146,11 +147,10 @@ func GameRoutine() {
 		Score: 0,
 	}
 
-	for gameLoop := true; gameLoop; {
+	for i := 0; i < repository.GetWordCount(); i++ {
 
 		idx, msg := repository.GetOneWord()
 		if idx == -1 {
-			gameLoop = false
 			fmt.Printf("\n%s\n", msg)
 			os.Exit(0)
 		}
@@ -163,7 +163,8 @@ func GameRoutine() {
 			game_obj.Drawing()
 
 			if game_obj.IsWin {
-				game_obj.Score += 1
+				stats.Score += 1
+				game_obj.Score = stats.Score
 				fmt.Printf("\nYou win, for this word!\n")
 				fmt.Printf("Other word is loading...")
 				break
@@ -185,6 +186,6 @@ func GameRoutine() {
 		repository.ScoreWord(idx)
 	}
 
-	fmt.Printf("The Game Finished...\nYour Score: %d/%d\n",
+	fmt.Printf("\n\nThe Game Finished...\nYour Score: %d/%d\n",
 		stats.Score, repository.GetWordCount())
 }

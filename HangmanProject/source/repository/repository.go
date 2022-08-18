@@ -47,5 +47,10 @@ func GetOneWord() (int, string) {
 	}
 
 	global_idx += 1
+
+	if global_idx == len(wordList) {
+		return -1, "All words are gone..."
+	}
+
 	return global_idx, wordList[global_idx]
 }
