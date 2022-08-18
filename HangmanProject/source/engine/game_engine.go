@@ -19,7 +19,6 @@ type GameObj struct {
 	TrueMoves    []byte
 	IsWin        bool
 	Score        int
-	IsStarted    bool
 }
 
 func CreateGameObj(word string, globalScore int) GameObj {
@@ -28,12 +27,10 @@ func CreateGameObj(word string, globalScore int) GameObj {
 		Word:         word,
 		IsWin:        false,
 		Score:        globalScore,
-		IsStarted:    true,
 	}
 }
 
 func mainMenuMsg() {
-
 	fmt.Printf("\n\n")
 	fmt.Println("*** *** MENU *** ***")
 	fmt.Println("1) Start Hangman Game")
@@ -78,23 +75,19 @@ func (g *GameObj) DrawHang(totalHeath int) {
 	fmt.Printf("   |\n")
 	fmt.Printf("  ---\n")
 
-	if !g.IsStarted {
+	if g.WrongMoveCtr > 0 {
+		fmt.Printf("   O\n")
+	}
 
-		if g.WrongMoveCtr > 0 {
-			fmt.Printf("   O\n")
+	for i := 0; i < g.WrongMoveCtr; i++ {
+
+		if i == 1 {
+			fmt.Printf("  /|\\\n")
+		} else if i == totalHeath-1 {
+			fmt.Printf("  / \\\n")
+		} else if i < totalHeath && i > 1 {
+			fmt.Printf("   |\n")
 		}
-
-		for i := 0; i < g.WrongMoveCtr; i++ {
-
-			if i == 1 {
-				fmt.Printf("  /|\\\n")
-			} else if i == totalHeath-1 {
-				fmt.Printf("  / \\\n")
-			} else if i < totalHeath && i > 1 {
-				fmt.Printf("   |\n")
-			}
-		}
-
 	}
 }
 
@@ -135,7 +128,6 @@ func (g *GameObj) CheckMove(move byte) bool {
 		return true
 	}
 
-	g.IsStarted = false
 	return false
 }
 
@@ -182,7 +174,6 @@ func GameRoutine() {
 				break
 			}
 		}
-
 		repository.ScoreWord(idx)
 	}
 
