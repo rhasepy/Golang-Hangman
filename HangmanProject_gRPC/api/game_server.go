@@ -237,7 +237,7 @@ func GameRoutine(client Services_GameServiceServer, errch chan error) error {
 			sendData(gameObj.Client, "Input: ")
 			msg, err := gameObj.Client.Recv()
 			if err != nil {
-				fmt.Fprintf(os.Stdout, "[%s] Client - %s, Cancelled!", util.GetCurrentTime(), msg.Name)
+				fmt.Fprintf(os.Stdout, "[%s] One client left!\n", util.GetCurrentTime())
 				return <-errch
 			}
 
