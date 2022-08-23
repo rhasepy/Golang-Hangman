@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"game/source/config"
+	"hangman_grpc/source/config"
+	"hangman_grpc/util"
 	"math/rand"
 	"time"
-	"weather/util"
 )
 
 var wordList []string

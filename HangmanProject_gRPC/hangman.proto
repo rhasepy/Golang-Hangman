@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "hangman/api";
+
+message FromClient {
+  string name = 1;
+  string body = 2;
+}
+
+message FromServer {
+  string name = 1;
+  string body = 2;
+}
+
+service Services {
+  rpc GameService(stream FromClient) returns (stream FromServer){};
+}

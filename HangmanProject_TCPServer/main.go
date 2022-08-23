@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"game/source/Network"
 	"game/source/engine"
+	"game/source/network"
 	"game/source/util"
 	"os"
 	"sync"
@@ -19,7 +19,7 @@ func getHelloMsg() []byte {
 		"******* ****** ****** ****** ****** ****** ******\n\n")
 }
 
-func handleRequest(socket Network.Socket) {
+func handleRequest(socket network.Socket) {
 
 	socket.Connection.Write(getHelloMsg())
 
@@ -35,18 +35,18 @@ func startServerActivity() {
 
 	fmt.Fprintf(os.Stdout, "[%s] Server Creating...\n", util.GetCurrentTime())
 
-	client := Network.Socket{
-		HOST: Network.HOST,
-		PORT: Network.PORT,
-		TYPE: Network.TYPE,
+	client := network.Socket{
+		HOST: network.HOST,
+		PORT: network.PORT,
+		TYPE: network.TYPE,
 	}
 
-	server := Network.CreateServer(Network.TYPE, Network.HOST, Network.PORT)
+	server := network.CreateServer(network.TYPE, network.HOST, network.PORT)
 	defer server.Close()
 
 	fmt.Fprintf(os.Stdout, "[%s] Server Created...\n", util.GetCurrentTime())
 	for {
-		client.Connection = Network.AcceptConnection(server)
+		client.Connection = network.AcceptConnection(server)
 
 		mutex.Lock()
 		activeConnection += 1

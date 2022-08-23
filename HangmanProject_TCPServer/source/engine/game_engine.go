@@ -2,8 +2,8 @@ package engine
 
 import (
 	"fmt"
-	"game/source/Network"
 	"game/source/config"
+	"game/source/network"
 	"game/source/repository"
 	"game/source/util"
 	"os"
@@ -20,10 +20,10 @@ type GameObj struct {
 	TrueMoves    []byte
 	IsWin        bool
 	Score        int
-	Client       Network.Socket
+	Client       network.Socket
 }
 
-func CreateGameObj(word string, globalScore int, client Network.Socket) GameObj {
+func CreateGameObj(word string, globalScore int, client network.Socket) GameObj {
 	return GameObj{
 		WrongMoveCtr: 0,
 		Word:         word,
@@ -102,7 +102,7 @@ func (g *GameObj) CheckMove(move byte) bool {
 	return false
 }
 
-func GameRoutine(client Network.Socket) {
+func GameRoutine(client network.Socket) {
 
 	repository.Construct()
 

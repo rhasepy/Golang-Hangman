@@ -1,10 +1,10 @@
-package Network
+package network
 
 import (
 	"fmt"
-	"game/source/util"
 	"net"
 	"os"
+	"weather/util"
 )
 
 const HOST = "localhost"

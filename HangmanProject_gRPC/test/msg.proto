@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package test;
+
+message Message {
+  string body = 1;
+}
+
+service GameService {
+  rpc Drawing(Message) returns (Message) {}
+}
+
